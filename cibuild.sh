@@ -38,8 +38,11 @@ downloadMSBuildForMono()
     then
         mkdir -p "$PACKAGES_DIR" # Create packages dir if it doesn't exist.
 
-        echo "** Downloading MSBUILD from $MSBUILD_DOWNLOAD_URL"
-        curl -sL -o "$MSBUILD_ZIP" "$MSBUILD_DOWNLOAD_URL"
+        if [ ! -e "$MSBUILD_ZIP" ]
+        then
+            echo "** Downloading MSBUILD from $MSBUILD_DOWNLOAD_URL"
+            curl -sL -o "$MSBUILD_ZIP" "$MSBUILD_DOWNLOAD_URL"
+        fi
 
         unzip -q "$MSBUILD_ZIP" -d "$PACKAGES_DIR"
         find "$PACKAGES_DIR/msbuild" -name "*.exe" -exec chmod "+x" '{}' ';'
